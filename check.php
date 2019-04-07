@@ -30,19 +30,27 @@ function test_input($data) {
 }
 
 ?>
-<!-- Api call for displaying the data -->
+<div style="display: flex; justify-content: center;">
+<br />
 <?PHP
-$header  = array('http' => array('user_agent' => 'Pwnage-Checker-For-iOS'));
+$header  = array('http' => array('user_agent' => 'BSL'));
 $baglam  = stream_context_create($header);
+
 $cek = json_decode(@file_get_contents('https://haveibeenpwned.com/api/v2/breachedaccount/' . urlencode($Email), false, $baglam), true);
+=======
+$lim=0;
+$lim = (@count($cek)>5)?5:@count(cek);
+
 if(@count($cek) > 0){
-	echo "This email account was compromised in the following breaches:";
-	for($i=0; $i<@count($cek); $i++){
-		echo "<li>".$cek[$i]['Domain']."</li>";
-	}
-	echo 'Dont forget to change your passwords!';
-}else{
-	echo "Huh! It seems to your informations are not leaked.";
+  echo "<br><div style= 'font:calibri;color:black;align:center;size:50pt'>This email account has been compromised as the following sites were hacked. Change your password immediately.</style></br>";
+  for($i=0; $i<$lim; $i++){
+    echo "<div style= 'font:courier;color:black;align:center;size:30pt'><li>".$cek[$i]['Domain']."</li></style>";
+  }
+  //echo "<br><div style= 'font:calibri;color:white;align:center;size:30pt'>Dont forget to change your passwords!</style></br>";
+}
+else{
+  echo "<div style= 'font:courier;color:black;align:center'>Huh! It seems to your informations are not leaked.</style>";
 }
 
 ?>
+
